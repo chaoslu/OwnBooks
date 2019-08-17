@@ -1,5 +1,6 @@
 import os
 import sys
+import argparse
 from glob import glob
 
 from blingfire import text_to_sentences
@@ -31,12 +32,27 @@ def convert_into_sentences(lines):
         n_sent += len(sents)
     return sent_L, n_sent
 
+if __name__ == '__main__':
 
-file_list = list(sorted(glob(os.path.join(file_dir, '*.txt'))))
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--in-dir', '--in', type=str, required=True)
+    parser.add_argument('--out-dir', '--out', type=str, required=True)
+    args = parser.parse_args()
 
-for i, file_path in enumerate(file_list):
-    sents, n_sent = convert_into_sentences(open(file_path).readlines())
-    print('\n'.join(sents))
-    print('\n\n\n\n')
-    sys.stderr.write(
-        '{}/{}\t{}\t{}\n'.format(i, len(file_list), n_sent, file_path))
+
+    file_list = list(sorted(glob(os.path.join(args.in_dir, '*.txt'))))
+
+    if not os.path.exists(args.out_dir):
+        os.makedirs(args.out_dir)
+    for i, file_path in enumerate(file_list):
+        sents, n_sent = convert_into_sentences(open(file_path).readlines())
+        sent_collection = '\n'.join(sents)
+        sent_collection = sent_collection + '\n\n\n\n'
+        if i>=300 & i%300 == 0:
+            with open(args.out_dir+str(int(i/300))+'.txt','w') as f:
+                f.write(sent_collection)
+
+        #print('\n'.join(sents))
+        #print('\n\n\n\n')
+        sys.stderr.write(
+            '{}/{}\t{}\t{}\n'.format(i, len(file_list), n_sent, file_path))
