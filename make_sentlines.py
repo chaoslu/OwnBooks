@@ -50,7 +50,7 @@ if __name__ == '__main__':
         sent_collection = '\n'.join(sents)
         sent_collection = sent_collection + '\n\n\n\n'
         if i>=300 & i%300 == 0:
-            with open(args.out_dir+str(int(i/300))+'.txt','w') as f:
+            with open(os.path.join(args.out_dir,str(int(i/300))+'.txt'),'w') as f:
                 f.write(sent_collection)
         if i > args.num_doc:
             break
