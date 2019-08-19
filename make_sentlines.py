@@ -37,6 +37,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--in-dir', '--in', type=str, required=True)
     parser.add_argument('--out-dir', '--out', type=str, required=True)
+    parser.add_argument('--num_doc',type=int,required=True)
     args = parser.parse_args()
 
 
@@ -51,6 +52,8 @@ if __name__ == '__main__':
         if i>=300 & i%300 == 0:
             with open(args.out_dir+str(int(i/300))+'.txt','w') as f:
                 f.write(sent_collection)
+        if i > args.num_doc:
+            break
 
         #print('\n'.join(sents))
         #print('\n\n\n\n')
