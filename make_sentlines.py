@@ -35,23 +35,27 @@ def convert_into_sentences(lines):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--in-dir', '--in', type=str, required=True)
-    parser.add_argument('--out-dir', '--out', type=str, required=True)
-    parser.add_argument('--num_doc',type=int,required=True)
+    parser.add_argument('--indir', type=str, required=True)
+    parser.add_argument('--outdir', type=str, required=True)
+    parser.add_argument('--num_doc',type=int,default=4783)
     args = parser.parse_args()
+    
 
+    file_list = list(sorted(glob(os.path.join(args.indir, '*.txt'))))
 
-    file_list = list(sorted(glob(os.path.join(args.in_dir, '*.txt'))))
-
-    if not os.path.exists(args.out_dir):
-        os.makedirs(args.out_dir)
+    if not os.path.exists(args.outdir):
+        os.makedirs(args.outdir)
+    
+    f = open(os.path.join(args.outdir,str(1)+'.txt'),'w')
     for i, file_path in enumerate(file_list):
+        if i%300 == 0:
+            if i>0:
+              f.close()
+              f = open(os.path.join(args.outdir,str(int(i/300)+1)+'.txt'),'w')
         sents, n_sent = convert_into_sentences(open(file_path).readlines())
         sent_collection = '\n'.join(sents)
         sent_collection = sent_collection + '\n\n\n\n'
-        if i>=300 & i%300 == 0:
-            with open(os.path.join(args.out_dir,str(int(i/300))+'.txt'),'w') as f:
-                f.write(sent_collection)
+        f.write(sent_collection)
         if i > args.num_doc:
             break
 
