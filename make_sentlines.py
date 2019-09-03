@@ -53,7 +53,7 @@ if __name__ == '__main__':
               f.close()
               f = open(os.path.join(args.outdir,str(int(i/300)+1)+'.txt'),'w')
         sents, n_sent = convert_into_sentences(open(file_path).readlines())
-        sent_collection = ''.join(sents)
+        sent_collection = '\n'.join(sents)
         sent_collection = sent_collection + '\n\n\n\n'
         f.write(sent_collection)
         if i > args.num_doc:
