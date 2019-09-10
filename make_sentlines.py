@@ -37,7 +37,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--indir', type=str, required=True)
     parser.add_argument('--outdir', type=str, required=True)
-    parser.add_argument('--num_doc',type=int,default=4783)
     args = parser.parse_args()
     
 
@@ -56,8 +55,7 @@ if __name__ == '__main__':
         sent_collection = '\n'.join(sents)
         sent_collection = sent_collection + '\n\n\n\n'
         f.write(sent_collection)
-        if i > args.num_doc:
-            break
+
 
         #print('\n'.join(sents))
         #print('\n\n\n\n')
