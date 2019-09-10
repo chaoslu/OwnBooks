@@ -48,10 +48,10 @@ if __name__ == '__main__':
     
     f = open(os.path.join(args.outdir,str(1)+'.txt'),'w')
     for i, file_path in enumerate(file_list):
-        if i%300 == 0:
+        if i%30 == 0:
             if i>0:
               f.close()
-              f = open(os.path.join(args.outdir,str(int(i/300)+1)+'.txt'),'w')
+              f = open(os.path.join(args.outdir,str(int(i/30)+1)+'.txt'),'w')
         sents, n_sent = convert_into_sentences(open(file_path).readlines())
         sent_collection = '\n'.join(sents)
         sent_collection = sent_collection + '\n\n\n\n'
